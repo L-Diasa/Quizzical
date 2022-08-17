@@ -1,13 +1,36 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import categories from "../categories.js"
+import Category from "../components/Category"
+import Carousel from "react-elastic-carousel"
 
 export default function Home(props) {
-    const [quizDetails, setQuizDetails] = React.useState({
+    const [quizDetails, setQuizDetails] = useState({
         category: "",
         difficulty: "",
         isMulChoice: true,
         isTorF: true,
     })
+    const [categoryList, setCategoryList] = useState([])
+
+    useEffect(() => {
+        setCategoryList(categories.map(category => 
+            <Category 
+                key={category.value} 
+                text={category.name} 
+                icon={category.icon} 
+                isSelected={quizDetails.category === category.value}
+                handleClick={() =>
+                    setQuizDetails( prev => {
+                    return { 
+                        ...prev,
+                        category: category.value
+                    }
+                    }
+                    )
+                }
+            />
+        ))
+    }, [quizDetails.category])
     
     function handleChange(event) {
         const {name, value, type, checked} = event.target
@@ -19,39 +42,39 @@ export default function Home(props) {
         })
     }
     
-    const categoryList = categories.map(category => {
-        return <option key={category.value} value={category.value} dangerouslySetInnerHTML={{__html: category.name}}></option>
-    })
-    
     return (
         <div className="home">
             <p className="home--appName">Quizzical</p>
             
             <div className="home--quiz-details">
-                <div className="home--select-type">
-                    <p>Select Type:</p>
-                    <input 
-                        type="checkbox" 
-                        id="isTorF" 
-                        checked={quizDetails.isTorF}
-                        onChange={handleChange}
-                        name="isTorF"
-                    />
-                    <label htmlFor="isTorF">True / False</label>
-                    <br/>
-                    <input 
-                        type="checkbox" 
-                        id="isMulChoice" 
-                        checked={quizDetails.isMulChoice}
-                        onChange={handleChange}
-                        name="isMulChoice"
-                    />
-                    <label htmlFor="isMulChoice">Multiple Choice</label>
+                <div className="checkbox-div">
+                    <p>Type</p>
+                    <label>
+                        <input 
+                            type="checkbox" 
+                            id="isTorF" 
+                            checked={quizDetails.isTorF}
+                            onChange={handleChange}
+                            name="isTorF"
+                        />
+                        True / False
+                    </label>
+                    <label>
+                        <input 
+                            type="checkbox" 
+                            id="isMulChoice" 
+                            checked={quizDetails.isMulChoice}
+                            onChange={handleChange}
+                            name="isMulChoice"
+                        />
+                        Multiple Choice
+                    </label>
                 </div>
                 
-                <div className="home--select-difficulty">
-                    <p>Select Difficulty:</p>
-                    <input 
+                <div className="checkbox-div">
+                    <p>Difficulty</p>
+                    <label>
+                        <input 
                         type="radio"
                         id="any"
                         name="difficulty"
@@ -59,10 +82,11 @@ export default function Home(props) {
                         checked={quizDetails.difficulty === ""}
                         onChange={handleChange}
                         />
-                        <label htmlFor="any">Any</label>
-                        <br />
+                        Any
+                    </label>
                         
-                    <input 
+                    <label>
+                        <input 
                         type="radio"
                         id="easy"
                         name="difficulty"
@@ -70,45 +94,54 @@ export default function Home(props) {
                         checked={quizDetails.difficulty === "easy"}
                         onChange={handleChange}
                         />
-                        <label htmlFor="easy">Easy</label>
-                        <br /> 
+                        Easy
+                    </label>
+
+                    <label>
+                        <input 
+                            type="radio"
+                            id="medium"
+                            name="difficulty"
+                            value="medium"
+                            checked={quizDetails.difficulty === "medium"}
+                            onChange={handleChange}
+                        />
+                        Medium
+                    </label>
                     
-                    <input 
-                        type="radio"
-                        id="medium"
-                        name="difficulty"
-                        value="medium"
-                        checked={quizDetails.difficulty === "medium"}
-                        onChange={handleChange}
-                    />
-                    <label htmlFor="medium">Medium</label>
-                    <br />
-                    
-                    <input 
-                        type="radio"
-                        id="hard"
-                        name="difficulty"
-                        value="hard"
-                        checked={quizDetails.difficulty === "hard"}
-                        onChange={handleChange}
-                    />
-                    <label htmlFor="hard">Hard</label>
-                    <br />
+                    <label>
+                        <input 
+                            type="radio"
+                            id="hard"
+                            name="difficulty"
+                            value="hard"
+                            checked={quizDetails.difficulty === "hard"}
+                            onChange={handleChange}
+                        />
+                        Hard
+                    </label>
                 </div>
                 
-                <div>
-                    <p>Select Category:</p>
-                    <select 
-                        id="category"
-                        value={quizDetails.category}
-                        onChange={handleChange}
-                        name="category"
+                <div className="carousel">
+                    <p>Category</p>
+                    <Carousel breakPoints={[
+                        { width: 1, itemsToShow: 1 },
+                        { width: 200, itemsToShow: 2 },
+                        { width: 300, itemsToShow: 3 }
+                        ]}
                     >
                         {categoryList}
-                    </select>
+                    </Carousel>
                 </div>
             </div>
-            <button onClick={() => props.handleStart(quizDetails)} className="home--startButton">Start Quiz</button>
+            <button 
+                onClick={() => 
+                    props.handleStart(quizDetails)
+                } 
+                className="home--startButton"
+            >
+                Start Quiz
+            </button>
         </div>
     )
 }

@@ -1,102 +1,128 @@
 export default [
     {
         value: "",
-        name: "Any Category"
+        name: "Any",
+        icon: "sliders horizontal"
     },
     {
         value: "9",
-        name: "General Knowledge"
+        name: "General Knowledge",
+        icon: "cloud"
     },
     {
         value: "10",
-        name: "Entertainment: Books"
+        name: "Books",
+        icon: "book"
     },
     {
         value: "11",
-        name: "Entertainment: Film"
+        name: "Film",
+        icon: "film"
+
     },
     {
         value: "12",
-        name: "Entertainment: Music"
+        name: "Music",
+        icon: "music"
     },
     {
         value: "13",
-        name: "Entertainment: Musicals &amp; Theatres"
+        name: "Musicals & Theatres",
+        icon: "podcast"
     },
     {
         value: "14",
-        name: "Entertainment: Television"
+        name: "Television",
+        icon: "tv"
     },
     {
         value: "15",
-        name: "Entertainment: Video Games"
+        name: "Video Games",
+        icon: "gamepad"
     },
     {
         value: "16",
-        name: "Entertainment: Board Games"
+        name: "Board Games",
+        icon: "chess"
     },
     {
         value: "17",
-        name: "Science &amp; Nature"
+        name: "Science & Nature",
+        icon: "rocket"
     },
     {
         value: "18",
-        name: "Science: Computers"
+        name: "Computers",
+        icon: "laptop"
     },
     {
         value: "19",
-        name: "Science: Mathematic"
+        name: "Mathematic",
+        icon: "calculator"
     },
     {
         value: "20",
-        name: "Mythology"
+        name: "Mythology",
+        icon: "eye"
     },
     {
         value: "21",
-        name: "Sports"
+        name: "Sports",
+        icon: "football ball"
     },
     {
         value: "22",
-        name: "Geography"
+        name: "Geography",
+        icon: "tree"
     },
     {
         value: "23",
-        name: "History"
+        name: "History",
+        icon: "globe"
     },
     {
         value: "24",
-        name: "Politics"
+        name: "Politics",
+        icon: "bullhorn"
     },
     {
         value: "25",
-        name: "Art"
+        name: "Art",
+        icon: "paint brush"
     },
     {
         value: "26",
-        name: "Celebrities"
+        name: "Celebrities",
+        icon: "star"
     },
     {
         value: "27",
-        name: "Animals"
+        name: "Animals",
+        icon: "sticker mule"
     },
     {
         value: "28",
-        name: "Vehicles"
+        name: "Vehicles",
+        icon: "truck"
     },
     {
         value: "29",
-        name: "Entertainment: Comics"
+        name: "Comics",
+        icon: "newspaper"
     },
     {
         value: "30",
-        name: "Science: Gadgets"
+        name: "Gadgets",
+        icon: "headphones"
     },
     {
         value: "31",
-        name: "Entertainment: Japanese Anime &amp; Manga"
+        name: "Japanese Anime & Manga",
+        icon: "certificate"
     },
     {
         value: "32",
-        name: "Entertainment: Cartoon &amp; Animations"
+        name: "Cartoon & Animations",
+        icon: "smile"
     } 
 ]
