@@ -1,15 +1,24 @@
 import React, { useState, useEffect } from "react"
 import { ThreeDots } from  'react-loader-spinner'
-import {nanoid} from "nanoid"
+import { nanoid } from "nanoid"
 import Task from "../components/Task"
 
 export default function Quiz({handleRestart, quizDetails}) {
-    
     const [allTasks, setAllTasks] = useState([])
-    const [showFeedback, setShowFeedback] = useState(false)
     const [score, setScore] = useState(0)
     const [loading, setLoading] = useState(true)
-    
+    const [currQuestion, setCurrQuestion] = useState(0)
+
+    const tasks = allTasks.map(task => (
+        <Task 
+            key={task.id} 
+            questionId={task.id}
+            question={task.question} 
+            answersArr={task.answers} 
+            handleClick={handleClick}
+        />
+    ))
+
     useEffect(() => {
         fetch(`https://opentdb.com/api.php?amount=5&category=${quizDetails.category}&difficulty=${quizDetails.difficulty}&type=${quizDetails.type}`)
         .then(res => res.json())
@@ -25,7 +34,7 @@ export default function Quiz({handleRestart, quizDetails}) {
             setTimeout(() => {
                 setLoading(false)
             }, 1300)
-        })
+        }).catch(err => setLoading(false))
     }, [])
     
     function generateAnswers(correct, wrongs) {
@@ -53,16 +62,14 @@ export default function Quiz({handleRestart, quizDetails}) {
     }
     
     function handleClick(questionId, answerId) {
-        if(!showFeedback) {
-            setAllTasks(prev => prev.map(item => {
-                return (item.id === questionId) ? 
-                {
-                    ...item,
-                    answers: handleSelection(item.answers,  answerId)
-                } :
-                item
-            }))
-        }
+        setAllTasks(prev => prev.map(item => {
+            return (item.id === questionId) ? 
+            {
+                ...item,
+                answers: handleSelection(item.answers,  answerId)
+            } :
+            item
+        }))
     }
     
     function handleSelection(answers,  answerId) {
@@ -72,20 +79,8 @@ export default function Quiz({handleRestart, quizDetails}) {
             {...answer, isHeld: false}
         })
     }
-
-    const tasks = allTasks.map(task => (
-        <Task 
-            key={task.id} 
-            questionId={task.id}
-            question={task.question} 
-            answersArr={task.answers} 
-            handleClick={handleClick}
-            showFeedback={showFeedback}
-        />
-    ))
     
     function checkAnswers() {
-        setShowFeedback(true)
         setScore(() => {
             return allTasks.reduce((previousValue, currentValue) => {
                 if (currentValue.answers.filter(answer => 
@@ -97,21 +92,50 @@ export default function Quiz({handleRestart, quizDetails}) {
                 }, 0);
         })
     }
+
+    function onFeedbackIndex() {
+        return currQuestion === 5
+    }
+
+    function quizButtonClick() {
+        if(onFeedbackIndex())
+        {
+            handleRestart()
+            setAllTasks([])
+        }  else {
+            setCurrQuestion(prev => prev + 1) 
+            if(currQuestion === 4) {
+                checkAnswers()
+            }
+        }
+    }
     
     return (
         <div className="quiz">
             <div className={`loaded ${loading ? "hidden" : ""}`}>
-                {tasks}  
                 { allTasks[0] &&
+                <>
+                <div className={`quiz-dots ${ onFeedbackIndex() ? "hidden" : ""}`}>
+                    <button className={`quiz-dot ${currQuestion === 0 ? "selected" : ""}`} type="button"></button>
+                    <button className={`quiz-dot ${currQuestion === 1 ? "selected" : ""}`} type="button"></button>
+                    <button className={`quiz-dot ${currQuestion === 2 ? "selected" : ""}`} type="button"></button>
+                    <button className={`quiz-dot ${currQuestion === 3 ? "selected" : ""}`} type="button"></button>
+                    <button className={`quiz-dot ${currQuestion === 4 ? "selected" : ""}`} type="button"></button>
+                </div>
+                {tasks[currQuestion]}  
                 <div className="quiz--feedback">
-                    {showFeedback && 
-                    <p className="quiz--feedback-score">
-                    You scored {score}/5 correct answers</p>}
+                    { 
+                        onFeedbackIndex() && 
+                        <p className="quiz--feedback-score">
+                        You scored {score}/5 correct answers</p>
+                    }
                     <button className="quiz--check-reset-button"
-                            onClick={showFeedback ? handleRestart : checkAnswers}>
-                        {showFeedback ? "Play again" : "Check answers"}
+                        onClick={quizButtonClick}
+                    >
+                        {onFeedbackIndex() ? "Play again" : "Next"}
                     </button>
                 </div>
+                </>
                 }
             </div>
             { loading ? 
@@ -120,7 +144,7 @@ export default function Quiz({handleRestart, quizDetails}) {
                     height="80" 
                     width="80" 
                     radius="9"
-                    color="#94D7A2" 
+                    color="#293264" 
                     ariaLabel="three-dots-loading"
                     visible={true}
                 />

@@ -48,30 +48,6 @@ export default function Home(props) {
             
             <div className="home--quiz-details">
                 <div className="checkbox-div">
-                    <p>Type</p>
-                    <label>
-                        <input 
-                            type="checkbox" 
-                            id="isTorF" 
-                            checked={quizDetails.isTorF}
-                            onChange={handleChange}
-                            name="isTorF"
-                        />
-                        True / False
-                    </label>
-                    <label>
-                        <input 
-                            type="checkbox" 
-                            id="isMulChoice" 
-                            checked={quizDetails.isMulChoice}
-                            onChange={handleChange}
-                            name="isMulChoice"
-                        />
-                        Multiple Choice
-                    </label>
-                </div>
-                
-                <div className="checkbox-div">
                     <p>Difficulty</p>
                     <label>
                         <input 
@@ -122,12 +98,38 @@ export default function Home(props) {
                     </label>
                 </div>
                 
+                <div className="checkbox-div">
+                    <p>Type of Answer</p>
+                    <label>
+                        <input 
+                            type="checkbox" 
+                            id="isTorF" 
+                            checked={quizDetails.isTorF}
+                            onChange={handleChange}
+                            name="isTorF"
+                        />
+                        True / False
+                    </label>
+                    <label>
+                        <input 
+                            type="checkbox" 
+                            id="isMulChoice" 
+                            checked={quizDetails.isMulChoice}
+                            onChange={handleChange}
+                            name="isMulChoice"
+                        />
+                        Multiple Choice
+                    </label>
+                </div>
+
                 <div className="carousel">
                     <p>Category</p>
                     <Carousel breakPoints={[
                         { width: 1, itemsToShow: 1 },
                         { width: 200, itemsToShow: 2 },
-                        { width: 300, itemsToShow: 3 }
+                        { width: 400, itemsToShow: 3 },
+                        { width: 550, itemsToShow: 4 },
+                        { width: 700, itemsToShow: 5 }
                         ]}
                     >
                         {categoryList}

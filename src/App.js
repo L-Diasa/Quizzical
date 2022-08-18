@@ -1,13 +1,10 @@
-import React from "react"
+import React, { useState } from "react"
 import Home from "./pages/Home"
 import Quiz from "./pages/Quiz"
 
-import yellowDecor from "./images/home--yellow-decor.svg"
-import blueDecor from "./images/home--blue-decor.svg"
-
 export default function App() {
-    const [started, setStarted] = React.useState(false)
-    const [quizDetails, setQuizDetails] = React.useState({
+    const [started, setStarted] = useState(false)
+    const [quizDetails, setQuizDetails] = useState({
         category: "10",
         difficulty: "medium",
         type: "boolean"
@@ -29,13 +26,9 @@ export default function App() {
     
     return (
         <main>
-            <img className="yellow-decor" 
-                src={yellowDecor}
-                //  src="../images/home--yellow-decor.svg" 
-                 alt="yellow-decor"/>
-            <img className="blue-decor" 
-                 src={blueDecor} 
-                 alt="blue-decor"/>
+            <div className="yellow-decor">
+            </div>
+            <div className="blue-decor"></div>
             {
                 started ?
                 <Quiz handleRestart={() => setStarted(false)}

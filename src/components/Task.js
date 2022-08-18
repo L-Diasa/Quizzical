@@ -1,13 +1,17 @@
-import React from "react"
+import React, { useState } from "react"
 import Answer from "./Answer"
 
 export default function Task(props) {
+    const [showFeedback, setShowFeedback] = useState(false)
     const answers = props.answersArr.map(answer => {
         return (
             <Answer
                 key={answer.id}
-                showFeedback={props.showFeedback}
-                handleClick={() => props.handleClick(props.questionId, answer.id)}
+                showFeedback={showFeedback}
+                handleClick={() => {
+                    props.handleClick(props.questionId, answer.id)
+                    setShowFeedback(true)
+                }}
                 {...answer}
             />
         )
@@ -20,7 +24,6 @@ export default function Task(props) {
             <div className="answers">
                 {answers}
             </div>
-            <hr/>
         </div>
     )
 }
