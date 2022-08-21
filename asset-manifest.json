@@ -1,17 +1,28 @@
 {
   "files": {
-    "main.css": "/Quizzical/static/css/main.075e482b.css",
-    "main.js": "/Quizzical/static/js/main.8a36d1f7.js",
+    "main.css": "/Quizzical/static/css/main.534fb0ac.css",
+    "main.js": "/Quizzical/static/js/main.7fed3f95.js",
+    "static/js/845.29297385.chunk.js": "/Quizzical/static/js/845.29297385.chunk.js",
+    "static/media/game.mp3": "/Quizzical/static/media/game.f4fabc7dc6ce56628c69.mp3",
+    "static/media/wrong.wav": "/Quizzical/static/media/wrong.cb3e1cf9d9c054ca9843.wav",
+    "static/media/confirm.wav": "/Quizzical/static/media/confirm.31b0350df8c1ba20b14d.wav",
+    "static/media/correct.wav": "/Quizzical/static/media/correct.37dbbf52e937e52facf6.wav",
+    "static/media/endGame.wav": "/Quizzical/static/media/endGame.48c218e05318d05a829e.wav",
+    "static/media/nextTask.wav": "/Quizzical/static/media/nextTask.f60edf00b44d196717fc.wav",
+    "static/media/selection.wav": "/Quizzical/static/media/selection.d6575fbd98ae1ecf1662.wav",
+    "static/media/toggle.wav": "/Quizzical/static/media/toggle.1b36d2edfd59606dc2a2.wav",
+    "static/media/settings.wav": "/Quizzical/static/media/settings.2c46cf73bfc233a828e9.wav",
     "index.html": "/Quizzical/index.html",
     "static/media/blue-decor--large.svg": "/Quizzical/static/media/blue-decor--large.5a0801127e1ec77c80b5.svg",
     "static/media/blue-decor--small.svg": "/Quizzical/static/media/blue-decor--small.0fdf2214edd292678ba2.svg",
     "static/media/yellow-decor--small.svg": "/Quizzical/static/media/yellow-decor--small.5359650569c49a18586e.svg",
     "static/media/yellow-decor--large.svg": "/Quizzical/static/media/yellow-decor--large.f3c06d8135630eb575b8.svg",
-    "main.075e482b.css.map": "/Quizzical/static/css/main.075e482b.css.map",
-    "main.8a36d1f7.js.map": "/Quizzical/static/js/main.8a36d1f7.js.map"
+    "main.534fb0ac.css.map": "/Quizzical/static/css/main.534fb0ac.css.map",
+    "main.7fed3f95.js.map": "/Quizzical/static/js/main.7fed3f95.js.map",
+    "845.29297385.chunk.js.map": "/Quizzical/static/js/845.29297385.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.075e482b.css",
-    "static/js/main.8a36d1f7.js"
+    "static/css/main.534fb0ac.css",
+    "static/js/main.7fed3f95.js"
   ]
 }
