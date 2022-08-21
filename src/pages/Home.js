@@ -3,7 +3,11 @@ import categories from "../categories.js"
 import Category from "../components/Category"
 import Carousel from "react-elastic-carousel"
 
-export default function Home(props) {
+import useSound from "use-sound"
+import selection from "../sounds/selection.wav"
+import confirm from "../sounds/confirm.wav"
+
+export default function Home({ handleStart, soundsOn, handleMusicFirstStart }) {
     const [quizDetails, setQuizDetails] = useState({
         category: "",
         difficulty: "",
@@ -11,28 +15,47 @@ export default function Home(props) {
         isTorF: true,
     })
     const [categoryList, setCategoryList] = useState([])
+    const [selectionSound] = useSound(selection, {
+        volume: 0.75 
+    })
+    const [confirmSound] = useSound(confirm, {
+        volume: 0.75 
+    })
 
     useEffect(() => {
+        playSelection()
         setCategoryList(categories.map(category => 
             <Category 
                 key={category.value} 
                 text={category.name} 
                 icon={category.icon} 
                 isSelected={quizDetails.category === category.value}
-                handleClick={() =>
+                handleClick={() => {
                     setQuizDetails( prev => {
-                    return { 
-                        ...prev,
-                        category: category.value
-                    }
-                    }
-                    )
-                }
+                        return { 
+                            ...prev,
+                            category: category.value
+                        }
+                    })
+                }}
             />
         ))
     }, [quizDetails.category])
+
+    function playSelection() {
+        if(soundsOn) {
+            selectionSound()
+        }
+    }
+
+    function playConfirm() {
+        if(soundsOn) {
+            confirmSound()
+        }
+    }
     
     function handleChange(event) {
+        playSelection()
         const {name, value, type, checked} = event.target
         setQuizDetails(prevFormData => {
             return {
@@ -124,22 +147,25 @@ export default function Home(props) {
 
                 <div className="carousel">
                     <p>Category</p>
-                    <Carousel breakPoints={[
-                        { width: 1, itemsToShow: 1 },
-                        { width: 200, itemsToShow: 2 },
-                        { width: 400, itemsToShow: 3 },
-                        { width: 550, itemsToShow: 4 },
-                        { width: 700, itemsToShow: 5 }
-                        ]}
+                    <Carousel 
+                        breakPoints={[
+                            { width: 1, itemsToShow: 1 },
+                            { width: 200, itemsToShow: 2 },
+                            { width: 400, itemsToShow: 3 },
+                            { width: 550, itemsToShow: 4 },
+                            { width: 700, itemsToShow: 5 }
+                            ]}
                     >
                         {categoryList}
                     </Carousel>
                 </div>
             </div>
             <button 
-                onClick={() => 
-                    props.handleStart(quizDetails)
-                } 
+                onClick={() => {
+                    handleStart(quizDetails)
+                    playConfirm()
+                    handleMusicFirstStart()
+                }} 
                 className="home--startButton"
             >
                 Start Quiz

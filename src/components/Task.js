@@ -12,6 +12,7 @@ export default function Task(props) {
                     props.handleClick(props.questionId, answer.id)
                     setShowFeedback(true)
                 }}
+                soundsOn={props.soundsOn}
                 {...answer}
             />
         )

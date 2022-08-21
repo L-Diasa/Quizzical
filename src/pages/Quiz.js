@@ -3,11 +3,25 @@ import { ThreeDots } from  'react-loader-spinner'
 import { nanoid } from "nanoid"
 import Task from "../components/Task"
 
-export default function Quiz({handleRestart, quizDetails}) {
+import useSound from "use-sound"
+import nextTask from "../sounds/nextTask.wav"
+import confirm from "../sounds/confirm.wav"
+import endGame from "../sounds/endGame.wav"
+
+export default function Quiz({ handleRestart, quizDetails, soundsOn }) {
     const [allTasks, setAllTasks] = useState([])
     const [score, setScore] = useState(0)
     const [loading, setLoading] = useState(true)
     const [currQuestion, setCurrQuestion] = useState(0)
+    const [confirmSound] = useSound(confirm, {
+        volume: 0.75 
+    })
+    const [endGameSound] = useSound(endGame, {
+        volume: 0.75 
+    })
+    const [nextTaskSound] = useSound(nextTask, {
+        volume: 0.75 
+    })
 
     const tasks = allTasks.map(task => (
         <Task 
@@ -16,6 +30,7 @@ export default function Quiz({handleRestart, quizDetails}) {
             question={task.question} 
             answersArr={task.answers} 
             handleClick={handleClick}
+            soundsOn={soundsOn}
         />
     ))
 
@@ -36,6 +51,22 @@ export default function Quiz({handleRestart, quizDetails}) {
             }, 1300)
         }).catch(err => setLoading(false))
     }, [])
+
+    function playSound(sound) {
+        if(soundsOn) {
+            switch(sound) {
+                case "confirm":
+                    confirmSound()
+                    break
+                case "endGame":
+                    endGameSound()
+                    break
+                case "nextTask":
+                    nextTaskSound()
+                    break
+            }
+        }
+    }
     
     function generateAnswers(correct, wrongs) {
         let anscount = (wrongs.length === 3) ? 4 : 2
@@ -102,10 +133,14 @@ export default function Quiz({handleRestart, quizDetails}) {
         {
             handleRestart()
             setAllTasks([])
+            playSound("confirm")
         }  else {
             setCurrQuestion(prev => prev + 1) 
             if(currQuestion === 4) {
                 checkAnswers()
+                playSound("endGame")
+            } else {
+                playSound("nextTask")
             }
         }
     }
@@ -156,7 +191,10 @@ export default function Quiz({handleRestart, quizDetails}) {
                         <p className="quiz--loading-text">Unfortunately, no questions found</p>
                         <button 
                             className="quiz--change-button"
-                            onClick={handleRestart}
+                            onClick={() => {
+                                handleRestart()
+                                playSound("confirm")
+                            }}
                         >
                             Change Quiz Details
                         </button>

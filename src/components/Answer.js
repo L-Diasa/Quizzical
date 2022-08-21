@@ -1,6 +1,10 @@
 import React from "react"
 
-export default function Answer({showFeedback, handleClick, value, isHeld, isCorrect}) {
+import useSound from "use-sound"
+import correct from "../sounds/correct.wav"
+import wrong from "../sounds/wrong.wav"
+
+export default function Answer({showFeedback, handleClick, value, isHeld, isCorrect, soundsOn}) {
     const feedbackCorrectStyle = {
         backgroundColor: "#94D7A2",
         borderColor: "#94D7A2",
@@ -23,6 +27,14 @@ export default function Answer({showFeedback, handleClick, value, isHeld, isCorr
         backgroundColor: isHeld ? "#D6DBF5" : "#F5F7FB",
     }
 
+    const [playCorrect] = useSound(correct, {
+        volume: 0.75 
+    })
+
+    const [playWrong] = useSound(wrong, {
+        volume: 0.75 
+    })
+
     return (
         <button 
             style={        
@@ -35,7 +47,12 @@ export default function Answer({showFeedback, handleClick, value, isHeld, isCorr
                     quizStyle
                     } 
             className="answer" 
-            onClick={handleClick} 
+            onClick={ () => {
+                handleClick()
+                if(soundsOn) {
+                    isCorrect ? playCorrect() : playWrong()
+                }
+            }} 
             dangerouslySetInnerHTML={{__html: value}}
         >
         </button>
